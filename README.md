@@ -14,34 +14,15 @@ TokenSPICE was meant to be simple. It definitely makes no claims on "best" for a
 
 # Initial Setup
 
-## Set up environment
+## Set up a virtual environment environment
 
-Open a new terminal and:
-```console
-git clone https://github.com/oceanprotocol/tokenspice2.git tokenspice
-cd tokenspice
 
-#make sure we're not in env't; remove old env'ts
-conda deactivate
-conda remove --name tokenspiceenv --all
-
-#create a python-anaconda env't in location ~/anaconda3/envs/tokenspiceenv
-conda env create -f environment.yml
-
-#activate env't
-conda activate tokenspiceenv
-```
 
 ## Get Ganache running
 
-Open a new terminal and:
-```console
-cd tokenspice
-
-#active env't
-conda activate tokenspiceenv
-
-#run ganache
+Open a new terminal and run ganache:
+```
+cd tokenspice2
 ./ganache.py
 ```
 
@@ -55,20 +36,15 @@ Open a separate terminal.
 ```console
 #Grab the contracts code from main, *OR* (see below)
 git clone https://github.com/oceanprotocol/contracts
-
-#OR grab from a branch. Here's Alex's V4 prototype branch
-git clone --branch feature/1mm-prototype_alex https://github.com/oceanprotocol/contracts
 ```
 
 Then, deploy. In that same terminal:
 ```console
 cd contracts
 
-#one-time install
-npm i
+yarn
 
-#compile .sol, deploy to ganache, update contracts/artifacts/*.json
-npm run deploy
+yarn deploy
 ```
 
 Finally, open `tokenspice/tokenspice.ini` and set `ARTIFACTS_PATH = contracts/artifacts`.
@@ -79,7 +55,7 @@ Finally, open `tokenspice/tokenspice.ini` and set `ARTIFACTS_PATH = contracts/ar
 ## Test one EVM-based test
 
 ```console
-pytest test/test_btoken.py
+pytest /web3engine/test/test_btoken.py
 ```
 
 ## Test that everything is working
