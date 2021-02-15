@@ -50,7 +50,7 @@ Finally, open `tokenspice/tokenspice.ini` and set `ARTIFACTS_PATH = contracts/ar
 
 ```console
 cd ..
-pytest /web3engine/test/test_btoken.py
+pytest web3engine/test/test_btoken.py
 ```
 
 ## Test that everything is working
