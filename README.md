@@ -32,12 +32,6 @@ Note: you could run ganache directly, but then you have to add many special argu
 
 Open a separate terminal.
 
-
-```console
-#Grab the contracts code from main, *OR* (see below)
-git clone https://github.com/oceanprotocol/contracts
-```
-
 Then, deploy. In that same terminal:
 ```console
 cd contracts
@@ -55,6 +49,7 @@ Finally, open `tokenspice/tokenspice.ini` and set `ARTIFACTS_PATH = contracts/ar
 ## Test one EVM-based test
 
 ```console
+cd ..
 pytest /web3engine/test/test_btoken.py
 ```
 
