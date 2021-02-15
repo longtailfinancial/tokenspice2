@@ -1,0 +1,54 @@
+language: node_js
+
+node_js:
+  - "12"
+
+dist: xenial
+
+sudo: required
+
+cache: npm
+
+env:
+  - DEPLOY_PACKAGE=true
+
+before_install:
+    - npm install -g ganache-cli@~6.4.1 
+    - npm i
+    - |
+      if [ "${DEPLOY_PACKAGE}" = "true" ] && [ ! -z "${TRAVIS_TAG}" ]; then
+        sudo apt-get -y install gnupg-agent python3-setuptools
+        gpg-agent --daemon --no-grab --write-env-file $HOME/.gpg-agent-info
+        pip3 install --upgrade --user twine six==1.10.0 wheel==0.31.0 setuptools
+        echo $GPG_SECRET_KEYS | base64 --decode | $GPG_EXECUTABLE --import
+        echo $GPG_OWNERTRUST | base64 --decode | $GPG_EXECUTABLE --import-ownertrust
+        version_line=$(cat .bumpversion.cfg | grep current_version)
+        release_version=${version_line##* }
+        export release_version
+        echo "Release version: $release_version"
+      fi
+
+before_script:
+    - ganache-cli > ganache-cli.log &
+
+script:
+    - npm run compile
+    - npm run lint
+    - npm run test:cover
+    - npm run deploy
+
+deploy:
+  - provider: npm
+    email: 'devops@oceanprotocol.com'
+    api_key: ${NPM_TOKEN}
+    skip_cleanup: true
+    on:
+      tags: true
+
+  - provider: script
+    script: bash -x ./scripts/deploy_pypi.sh
+    skip_cleanup: true
+    on:
+      tags: true
+      all_branches: true
+      condition: $DEPLOY_PACKAGE = true
