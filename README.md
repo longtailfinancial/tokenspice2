@@ -171,8 +171,6 @@ Schematics to simulate Ocean Market. We've kept them in the context of system-le
 
 <img src="images/model-new1.png" width="100%">
 
-[Gslides](https://docs.google.com/presentation/d/14BB50dkGXTcPjlbrZilQ3WYnFLDetgfMS1BKGuMX8Q0/edit#slide=id.p1)
-
 # Backlog
 
 Work is currently geared towards verifying Ocean V4, which updates Ocean smart contracts for better IDOs through one-sided market makers and more.
