@@ -57,86 +57,13 @@ pytest web3engine/test/test_btoken.py
 pytest
 ```
 
-# Updating Env't
-
-You don't need this info at the beginning, but it's good to know about as you make changes.
-
-To change dependencies, first update `environment.yml`. Then:
-```console
-#make sure env't is active
-conda activate tokenspiceenv
-
-#main update. The 'prune' part gets rid of unused pkgs
-conda env update --name tokenspiceenv --file environment.yml --prune
-```
-
-Leave environment:
-```console
-conda deactivate
-```
-
-Delete environment:
-```console
-conda remove --name tokenspiceenv --all
-```
-
 # C. Do Simulations, Make Changes
 
-## Do Once, At Session Start
-
-**Start chain.** Open a new terminal and:
-```console
-cd ~/code/tokenspice
-conda activate tokenspiceenv
-./ganache.py
-```
-
-**Deploy contracts.** Open a new terminal and:
-```console
-cd ~/code/contracts
-npm run deploy
-```
-
-## Do >=1 Times in a Session
-
 **Update simulation code.** Open a new terminal. In it:
-```console
-cd ~/code/tokenspice
-conda activate tokenspiceenv
-./emacs <path/foo.py>
-#then change foo.py in editor
-```
 
 **Run tests.** In the same terminal as before:
-```console
-#run a single pytest-based test
-pytest tests/test_foo.py::test_foobar
-
-#run a single pytest-based test file
-pytest tests/test_foo.py
-
-#run all tests in engine/ directory
-pytest engine/
-
-#run all tests except web3engine/ (slow)
-pytest --ignore=web3engine
-
-#run all tests 
+```console 
 pytest
-```
-
-**Commit changes.**
-```console
-git add <changed filename>
-git status -s [[check status]]
-git commit -m <my commit message>
-git push
-
-#or
-
-git status -s [[check status]]
-git commit -am <my commit message>
-git push
 ```
 
 **Change sim settings as needed.**
