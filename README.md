@@ -1,5 +1,3 @@
-**WARNING: this is WIP code. Prototype, not fully functional, etc. Keep your expectations low. But maybe parts are useful to some:)**
-
 # 🐠 TokenSPICE v0.2: Token Simulator with EVM
 
 TokenSPICE can be used to help design, tune, and verify tokenized ecosystems in an overall Token Engineering (TE) flow.
@@ -14,34 +12,15 @@ TokenSPICE was meant to be simple. It definitely makes no claims on "best" for a
 
 # Initial Setup
 
-## Set up environment
+### -> Set up a virtual environment environment
 
-Open a new terminal and:
-```console
-git clone https://github.com/oceanprotocol/tokenspice2.git tokenspice
-cd tokenspice
 
-#make sure we're not in env't; remove old env'ts
-conda deactivate
-conda remove --name tokenspiceenv --all
-
-#create a python-anaconda env't in location ~/anaconda3/envs/tokenspiceenv
-conda env create -f environment.yml
-
-#activate env't
-conda activate tokenspiceenv
-```
 
 ## Get Ganache running
 
-Open a new terminal and:
-```console
-cd tokenspice
-
-#active env't
-conda activate tokenspiceenv
-
-#run ganache
+Open a new terminal and run ganache:
+```
+cd tokenspice2
 ./ganache.py
 ```
 
@@ -51,24 +30,13 @@ Note: you could run ganache directly, but then you have to add many special argu
 
 Open a separate terminal.
 
-
-```console
-#Grab the contracts code from main, *OR* (see below)
-git clone https://github.com/oceanprotocol/contracts
-
-#OR grab from a branch. Here's Alex's V4 prototype branch
-git clone --branch feature/1mm-prototype_alex https://github.com/oceanprotocol/contracts
-```
-
 Then, deploy. In that same terminal:
 ```console
 cd contracts
 
-#one-time install
-npm i
+yarn
 
-#compile .sol, deploy to ganache, update contracts/artifacts/*.json
-npm run deploy
+yarn deploy
 ```
 
 Finally, open `tokenspice/tokenspice.ini` and set `ARTIFACTS_PATH = contracts/artifacts`.
@@ -79,7 +47,8 @@ Finally, open `tokenspice/tokenspice.ini` and set `ARTIFACTS_PATH = contracts/ar
 ## Test one EVM-based test
 
 ```console
-pytest test/test_btoken.py
+cd ..
+pytest web3engine/test/test_btoken.py
 ```
 
 ## Test that everything is working
@@ -88,86 +57,13 @@ pytest test/test_btoken.py
 pytest
 ```
 
-# Updating Env't
-
-You don't need this info at the beginning, but it's good to know about as you make changes.
-
-To change dependencies, first update `environment.yml`. Then:
-```console
-#make sure env't is active
-conda activate tokenspiceenv
-
-#main update. The 'prune' part gets rid of unused pkgs
-conda env update --name tokenspiceenv --file environment.yml --prune
-```
-
-Leave environment:
-```console
-conda deactivate
-```
-
-Delete environment:
-```console
-conda remove --name tokenspiceenv --all
-```
-
 # C. Do Simulations, Make Changes
 
-## Do Once, At Session Start
-
-**Start chain.** Open a new terminal and:
-```console
-cd ~/code/tokenspice
-conda activate tokenspiceenv
-./ganache.py
-```
-
-**Deploy contracts.** Open a new terminal and:
-```console
-cd ~/code/contracts
-npm run deploy
-```
-
-## Do >=1 Times in a Session
-
 **Update simulation code.** Open a new terminal. In it:
-```console
-cd ~/code/tokenspice
-conda activate tokenspiceenv
-./emacs <path/foo.py>
-#then change foo.py in editor
-```
 
 **Run tests.** In the same terminal as before:
-```console
-#run a single pytest-based test
-pytest tests/test_foo.py::test_foobar
-
-#run a single pytest-based test file
-pytest tests/test_foo.py
-
-#run all tests in engine/ directory
-pytest engine/
-
-#run all tests except web3engine/ (slow)
-pytest --ignore=web3engine
-
-#run all tests 
+```console 
 pytest
-```
-
-**Commit changes.**
-```console
-git add <changed filename>
-git status -s [[check status]]
-git commit -m <my commit message>
-git push
-
-#or
-
-git status -s [[check status]]
-git commit -am <my commit message>
-git push
 ```
 
 **Change sim settings as needed.**
@@ -274,8 +170,6 @@ Schematics to simulate Ocean Market. We've kept them in the context of system-le
 ### New model 1
 
 <img src="images/model-new1.png" width="100%">
-
-[Gslides](https://docs.google.com/presentation/d/14BB50dkGXTcPjlbrZilQ3WYnFLDetgfMS1BKGuMX8Q0/edit#slide=id.p1)
 
 # Backlog
 
