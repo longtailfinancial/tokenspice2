@@ -1,7 +1,7 @@
 import logging
 log = logging.getLogger('marketagents')
 
-from enforce_typing import enforce_types # type: ignore[import]
+from enforce_typing import enforce_types
 import random
 
 from agents.BaseAgent import BaseAgent
@@ -31,31 +31,31 @@ class DataecosystemAgent(BaseAgent):
         #magic number: rule - only create if no agents so far
         return (not state.publisherAgents()) 
             
-    def _createPublisherAgent(self, state) -> PublisherAgent:
+    def _createPublisherAgent(self, state) -> None:
         name = 'foo' #FIXME
         USD = 0.0 #FIXME magic number
         OCEAN = 1000.0 #FIXME magic number
         new_agent = PublisherAgent(name=name, USD=USD, OCEAN=OCEAN)
-        new_agents.add(new_agent)
+        state.addAgent(new_agent)
 
     def _doCreateStakerspeculatorAgent(self, state) -> bool:
         #magic number: rule - only create if no agents so far
         return (not state.stakerspeculatorAgents())  
             
-    def _createStakerspeculatorAgent(self, state) -> StakerspeculatorAgent:
+    def _createStakerspeculatorAgent(self, state) -> None:
         name = 'foo' #FIXME
         USD = 0.0 #FIXME magic number
         OCEAN = 1000.0 #FIXME magic number
         new_agent = StakerspeculatorAgent(name=name, USD=USD, OCEAN=OCEAN)
-        new_agents.add(new_agent)
+        state.addAgent(new_agent)
 
     def _doCreateDataconsumerAgent(self, state) -> bool:
         #magic number: rule - only create if no agents so far
         return (not state.dataconumerAgents()) 
             
-    def _createDataconsumerAgent(self, state) -> DataconsumerAgent:
+    def _createDataconsumerAgent(self, state) -> None:
         name = 'foo' #FIXME
         USD = 0.0 #FIXME magic number
         OCEAN = 1000.0 #FIXME magic number
         new_agent = DataconsumerAgent(name=name, USD=USD, OCEAN=OCEAN)
-        new_agents.add(new_agent)
+        state.addAgent(new_agent)

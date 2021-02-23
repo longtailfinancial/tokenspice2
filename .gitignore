@@ -1,9 +1,8 @@
 # Local drivers
-driver.py
-spirit_driver.py
-
 *.pyc
 *~
+contracts/
+output/
 .pytest_cache/
 engine/__pycache__/
 engine/test/__pycache__/

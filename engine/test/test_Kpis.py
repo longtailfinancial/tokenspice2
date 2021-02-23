@@ -1,4 +1,4 @@
-from enforce_typing import enforce_types # type: ignore[import]
+from enforce_typing import enforce_types
 import pytest
 
 from engine.Kpis import KPIs
@@ -16,7 +16,7 @@ class BaseDummyMarketplacesAgent:
 class BaseDummySimState:
     def __init__(self):
         self._marketplaces1_agent = None
-    def takeStep() -> None:
+    def takeStep(state) -> None:
         pass
     def getAgent(self, name: str):
         return self._marketplaces1_agent    

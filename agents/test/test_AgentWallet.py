@@ -1,4 +1,4 @@
-from enforce_typing import enforce_types # type: ignore[import]
+from enforce_typing import enforce_types
 import pytest
 
 from agents.AgentWallet import *
@@ -28,11 +28,6 @@ def test_initRandomPrivateKey():
 def test_gotSomeETHforGas():
     w = AgentWallet()
     assert w.ETH() > 0.0    
-
-@enforce_types
-def testStr():
-    w = AgentWallet()        
-    assert "AgentWallet" in str(w)
 
 @enforce_types
 def testInitiallyEmpty():

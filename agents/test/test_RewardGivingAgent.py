@@ -1,7 +1,7 @@
 from enforce_typing import enforce_types
 
 from agents.BaseAgent import BaseAgent
-from agents.GrantGivingAgent import GrantGivingAgent
+from agents.RewardGivingAgent import RewardGivingAgent
 from engine import SimState, SimStrategy
 from util.constants import S_PER_DAY
 
@@ -19,7 +19,7 @@ def test1():
     state.agents["a1"] = a1 = SimpleAgent("a1", 0.0, 0.0)
     assert a1.OCEAN() == 0.0
 
-    g1 = GrantGivingAgent(
+    g1 = RewardGivingAgent(
         "g1", USD=0.0, OCEAN=1.0,
         receiving_agent_name="a1",
         s_between_grants=S_PER_DAY*3, n_actions=4)

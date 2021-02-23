@@ -6,7 +6,7 @@ from enforce_typing import enforce_types
 from agents.BaseAgent import BaseAgent
                         
 @enforce_types
-class GrantGivingAgent(BaseAgent):
+class RewardGivingAgent(BaseAgent):
     """
     Disburses funds at a fixed # evenly-spaced intervals.
     Same amount each time.
@@ -38,11 +38,19 @@ class GrantGivingAgent(BaseAgent):
 
     def _disburseFunds(self, state):
         #same amount each time
+        #receiving_agents = stakers.list
+        # for x in agents:
+        #   dispurce(reward) 
         receiving_agent = state.getAgent(self._receiving_agent_name)
-        
-        USD = min(self.USD(), self._USD_per_grant)
-        self._transferUSD(receiving_agent, USD)
-                
+        stakers = state.agents.filterToStakerspeculator().values()
+        print(stakers)
+
+        USD = min(self.USD(), self._USD_per_grant)                
         OCEAN = min(self.OCEAN(), self._OCEAN_per_grant)
+
+        self._transferUSD(receiving_agent, USD)
         self._transferOCEAN(receiving_agent, OCEAN)
+
+
+
     
