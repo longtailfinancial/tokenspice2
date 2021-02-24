@@ -28,9 +28,12 @@ cd tokenspice2
 
 Note: you could run ganache directly, but then you have to add many special arguments. The script above does that for you.
 
+## First time: download ocean contracts
+`git clone https://github.com/ocean/contracts`
+
 ## Deploy the smart contracts to ganache
 
-Open a separate terminal.
+
 
 Then, deploy. In that same terminal:
 ```console
