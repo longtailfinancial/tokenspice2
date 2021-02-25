@@ -45,8 +45,9 @@ yarn
 
 yarn deploy
 ```
+(only do this for customn path, already set up)
+Finally, open `tokenspice/tokenspice.ini` and set `ARTIFACTS_PATH = contracts/artifacts`. 
 
-Finally, open `tokenspice/tokenspice.ini` and set `ARTIFACTS_PATH = contracts/artifacts`.
 * Now, TokenSPICE knows where to find each contract on ganache (address.json file)
 * And, it knows what each contract's interface is (*.json files).
 
