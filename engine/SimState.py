@@ -12,6 +12,8 @@ from agents.GrantTakingAgent import GrantTakingAgent
 from agents.MarketplacesAgent import MarketplacesAgent
 from agents.DataecosystemAgent import DataecosystemAgent
 from agents.OCEANBurnerAgent import OCEANBurnerAgent
+from agents.StakerspeculatorAgent import StakerspeculatorAgent
+
 from agents.RouterAgent import RouterAgent
 # from agents.EWPublisherAgent import EWPublisherAgent
 from engine import Kpis, SimStrategy
@@ -56,17 +58,25 @@ class SimState(object):
         new_agents: Set[BaseAgent] = set()
 
         #FIXME: replace MarketplacesAgent with DataecosystemAgent, when ready
-        # new_agents.add(MarketplacesAgent(
-            # name = "marketplaces1", USD=0.0, OCEAN=0.0,
-            # toll_agent_name = "opc_address",
-            # n_marketplaces = float(ss.init_n_marketplaces),
-            # revenue_per_marketplace_per_s = 2e3 / S_PER_MONTH, #magic number
-            # time_step = self.ss.time_step,
-            # ))
+        new_agents.add(MarketplacesAgent(
+            name = "marketplaces1", USD=0.0, OCEAN=0.0,
+            toll_agent_name = "opc_address",
+            n_marketplaces = float(ss.init_n_marketplaces),
+            revenue_per_marketplace_per_s = 2e3 / S_PER_MONTH, #magic number
+            time_step = self.ss.time_step,
+            ))
 
-        new_agents.add(DataecosystemAgent(
-            name = "dataecosystem1", USD=0.0, OCEAN=0.0,
-        ))
+        # new_agents.add(DataecosystemAgent(
+        #     name = "dataecosystem1", USD=0.0, OCEAN=0.0
+        # ))
+        
+        
+        new_agent = DataecosystemAgent(
+            name = "dataecosystem1", USD=0.0, OCEAN=0.0
+        )
+        # create the agents of the ecosystem first
+        new_agent.takeStep(self)
+        new_agents.add(new_agent)
 
         new_agents.add(RouterAgent(
             name = "opc_address", USD=0.0, OCEAN=0.0,
@@ -131,14 +141,20 @@ class SimState(object):
 
         #track certain metrics over time, so that we don't have to load
         self.kpis = Kpis.KPIs(self.ss.time_step)
-        
+
         log.debug("init: end")
             
     def takeStep(self) -> None:
         """This happens once per tick"""
         #update agents
-        for agent in self.agents.values():
-            agent.takeStep(self)
+
+        # real_agents = self.agents.copy()
+        # number = len(real_agents)
+        for key, agent in list(self.agents.items()):
+            # if "Energy Web Publisher" in agent.name:
+                # print(agent) 
+                agent.takeStep(self)
+
 
         #update global state values: revenue, valuation
         self.kpis.takeStep(self)
@@ -158,11 +174,30 @@ class SimState(object):
 
     def addAgent(self, agent):
         assert agent.name not in self.agents, "have an agent with this name" 
-        self.agents[agent.name] = self.agents
+        self.agents[agent.name] = agent
 
     def publisherAgents(self):
         return {name:agent for name,agent in self.agents.items() 
                 if name.startswith('Publisher')}
+
+    # >>>> DEC updates
+    def stakerspeculatorAgents(self):
+        return {name:agent for name,agent in self.agents.items() 
+                if name.startswith('Staker')}
+
+    def dataconsumerAgents(self):
+        return {name:agent for name,agent in self.agents.items() 
+                if name.startswith('Dataconsumer')}
+
+    def ewpublisherAgents(self):
+        return {name:agent for name,agent in self.agents.items() 
+                if name.startswith('Energy Web Publisher')}
+
+    def ewoptimizerAgents(self):
+        return {name:agent for name,agent in self.agents.items() 
+                if name.startswith('Energy Web Optimizer')}
+
+    # <<<< DEC updates
 
     #==============================================================      
     def marketplacePercentTollToOcean(self) -> float:

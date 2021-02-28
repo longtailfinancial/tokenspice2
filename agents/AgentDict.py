@@ -4,6 +4,8 @@ from agents.PublisherAgent import PublisherAgent
 from agents.PoolAgent import PoolAgent
 from agents.StakerspeculatorAgent import StakerspeculatorAgent
 from agents.DataconsumerAgent import DataconsumerAgent
+from agents.EWOptimizerAgent import EWOptimizerAgent
+
 
 @enforce_types
 class AgentDict(dict):
@@ -13,7 +15,7 @@ class AgentDict(dict):
         Extend the dict object to get the best of both worlds (object/dict)
         """
         super(AgentDict, self).__init__(*arg, **kw)
-    
+
     def filterByNonzeroStake(self, agent):
         """Which pools has 'agent' staked on?"""
         return AgentDict({pool_agent.name : pool_agent
@@ -28,6 +30,10 @@ class AgentDict(dict):
 
     def filterToStakerspeculator(self):
         return self.filterByClass(StakerspeculatorAgent)
+
+    # DEC update Optimizer
+    def filterToOptimizer(self):
+        return self.filterByClass(EWOptimizerAgent)
 
     def filterToDataconsumer(self):
         return self.filterByClass(DataconsumerAgent)

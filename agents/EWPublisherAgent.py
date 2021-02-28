@@ -4,7 +4,7 @@ log = logging.getLogger('marketagents')
 from enforce_typing import enforce_types # type: ignore[import]
 import random
 
-from agents.PublisherAgent import PublisherAgent
+from agents.BaseAgent import BaseAgent
 from agents.PoolAgent import PoolAgent
 from util import constants
 from util.constants import POOL_WEIGHT_DT, POOL_WEIGHT_OCEAN
@@ -12,7 +12,7 @@ from web3engine import bfactory, bpool, datatoken, dtfactory, globaltokens
 from web3tools.web3util import toBase18
         
 @enforce_types
-class EWPublisherAgent(PublisherAgent):
+class EWPublisherAgent(BaseAgent):
     def __init__(self, name: str, USD: float, OCEAN: float):
         super().__init__(name, USD, OCEAN)
         
@@ -47,7 +47,8 @@ class EWPublisherAgent(PublisherAgent):
         #name
         pool_i = len(state.agents.filterToPool())
         dt_name = f'DT{pool_i}'
-        pool_agent_name = f'pool{pool_i}'
+        # >>> DEC change
+        pool_agent_name = f'EnergyWeb pool{pool_i}'
         
         #new DT
         DT = self._createDatatoken(dt_name, mint_amt=1000.0) #magic number
@@ -55,9 +56,9 @@ class EWPublisherAgent(PublisherAgent):
         #new pool
         pool_address = bfactory.BFactory().newBPool(from_wallet=wallet)
         pool = bpool.BPool(pool_address)
-
+        print("Pool create...")
         #bind tokens & add initial liquidity
-        OCEAN_bind_amt = self.OCEAN() #magic number: use all the OCEAN
+        OCEAN_bind_amt = 0.5*self.OCEAN() #magic number: use all the OCEAN
         DT_bind_amt = 20.0 #magic number
                 
         DT.approve(pool.address, toBase18(DT_bind_amt), from_wallet=wallet)
@@ -72,8 +73,9 @@ class EWPublisherAgent(PublisherAgent):
 
         #create agent
         pool_agent = PoolAgent(pool_agent_name, pool)
+        pool_agent.takeStep(state)
         state.addAgent(pool_agent)
-        
+        print("Pool add agent...")
         return pool_agent
 
     def _doUnstakeOCEAN(self, state) -> bool:

@@ -1,9 +1,14 @@
 name: tokenspiceenv
 dependencies:
-  - pip==9.0.1
+  - python==3.8
+  - pip
   - numpy
+  - pandas
   - matplotlib
   - pip:
+    - cadcad
+    - hvplot
+    - plotly
     - enforce-typing
     - pytest
     - web3
@@ -15,4 +20,3 @@ dependencies:
     - eth-keys
     - eth-utils
     - names
-    
