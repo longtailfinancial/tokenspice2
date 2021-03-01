@@ -18,7 +18,9 @@ TokenSPICE was meant to be simple. It definitely makes no claims on "best" for a
 
 ### -> Set up and activate a virtual environment environment
 
+if you don't have ganache install it with npm
 
+`npm install -g ganache-cli`
 
 ## Get Ganache running
 
