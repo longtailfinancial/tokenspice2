@@ -7,8 +7,8 @@ import names
 
 from .BaseAgent import BaseAgent
 from .PublisherAgent import PublisherAgent
-from .EWPublisherAgent import EWPublisherAgent
-from .EWOptimizerAgent import EWOptimizerAgent
+from ..ewagents.EWPublisherAgent import EWPublisherAgent
+from ..ewagents.EWOptimizerAgent import EWOptimizerAgent
 
 from .StakerspeculatorAgent import StakerspeculatorAgent
 from .DataconsumerAgent import DataconsumerAgent

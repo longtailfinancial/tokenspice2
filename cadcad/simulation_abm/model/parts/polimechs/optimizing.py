@@ -1,5 +1,5 @@
 import random
-from ..agents.EWPublisherAgent import EWPublisherAgent
+from ..ewagents.EWPublisherAgent import EWPublisherAgent
 from ..agents.AgentDict import AgentDict
 
 def p_optimizing(params, substep, state_history, prev_state):

@@ -4,8 +4,6 @@ from .PublisherAgent import PublisherAgent
 from .PoolAgent import PoolAgent
 from .StakerspeculatorAgent import StakerspeculatorAgent
 from .DataconsumerAgent import DataconsumerAgent
-from .EWPublisherAgent import EWPublisherAgent
-from .EWOptimizerAgent import EWOptimizerAgent
 
 @enforce_types
 class AgentDict(dict):
@@ -43,12 +41,6 @@ class AgentDict(dict):
                           if isinstance(agent, _class)})
 
     # DEC update Energyy Web
-
-    def filterToEWPublisher(self):
-        return self.filterByClass(EWPublisherAgent)
-
-    def filterToEWOptimizer(self):
-        return self.filterByClass(EWOptimizerAgent)
 
     def filterByEWDevicePool(self, _class):
         return AgentDict({agent.name : agent

@@ -6,6 +6,9 @@ dependencies:
   - pandas
   - matplotlib
   - pip:
+    - stable-baselines3
+    - gym
+    - py_trees
     - cadcad
     - hvplot
     - plotly
